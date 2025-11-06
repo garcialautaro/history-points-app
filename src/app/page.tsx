@@ -16,31 +16,27 @@ export default function Home() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        setLoading(true)
-        const data = await fetchSheetData()
-        setDevelopers(data)
-        setError(null)
-      } catch (err) {
-        console.error('Error loading data:', err)
-        setError('Error al cargar los datos. Por favor, verifica la configuración.')
-      } finally {
-        setLoading(false)
-      }
+  const loadData = async () => {
+    try {
+      setLoading(true)
+      const data = await fetchSheetData()
+      setDevelopers(data)
+      setError(null)
+    } catch (err) {
+      console.error('Error loading data:', err)
+      setError('Error al cargar los datos. Por favor, verifica la configuración.')
+    } finally {
+      setLoading(false)
     }
+  }
 
+  useEffect(() => {
     loadData()
-    // Actualizar cada 30 segundos
-    const interval = setInterval(loadData, 30000)
-
-    return () => clearInterval(interval)
   }, [])
 
   return (
     <main className="min-h-screen flex flex-col bg-[#0a0a0a]">
-      <Header />
+      <Header onRefresh={loadData} />
 
       <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {loading ? (

@@ -7,7 +7,7 @@ Aplicacion web desarrollada en Next.js para visualizar de forma divertida la acu
 - **Carrera de caballos animada**: Cada desarrollador esta representado por un "caballo" con su foto
 - **Datos en tiempo real**: Integracion con Google Sheets para obtener los puntos actualizados
 - **Diseno responsive**: Optimizado para mobile, tablet y desktop
-- **Actualizacion automatica**: Los datos se actualizan cada 30 segundos
+- **Boton de refrescar**: Actualiza los datos manualmente desde el navbar
 - **Diseno oscuro premium**: Interfaz moderna con fondo negro, efectos de glow y animaciones fluidas
 - **Color primary destacado**: Uso intensivo del color #c93448 en bordes, textos y efectos visuales
 - **Animaciones avanzadas**: Efectos con Framer Motion, transiciones suaves y elementos interactivos
@@ -205,14 +205,6 @@ colors: {
   'dark-bg': '#0a0a0a',
   'card-bg': '#1a1a1a',
 }
-```
-
-### Ajustar tiempo de actualizacion
-
-Edita `src/app/page.tsx`, linea ~30:
-
-```typescript
-const interval = setInterval(loadData, 30000) // 30 segundos
 ```
 
 ## Deployment
