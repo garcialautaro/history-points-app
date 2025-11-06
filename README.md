@@ -84,12 +84,14 @@ La aplicacion estara disponible en [http://localhost:3000](http://localhost:3000
 Tu hoja de calculo debe tener esta estructura:
 
 ```
-    A       B       C
-1   Gaston  Marcos  Benji
-2   10      20      30
+    A       B       C       D
+1   Gaston  Marcos  Benji   Mes
+2   10      20      30      Noviembre
 ```
 
-Los valores en **A2, B2 y C2** son los que la aplicacion leera.
+Los valores en **A2, B2, C2 y D2** son los que la aplicacion leera:
+- **A2, B2, C2**: Puntos de cada desarrollador (Gaston, Marcos, Benji)
+- **D2**: Nombre del mes actual
 
 ### Guia Completa
 

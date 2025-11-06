@@ -11,8 +11,14 @@ export interface Developer {
   photo: string
 }
 
+export interface SheetData {
+  developers: Developer[]
+  month: string
+}
+
 export default function Home() {
   const [developers, setDevelopers] = useState<Developer[]>([])
+  const [month, setMonth] = useState<string>('')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -20,7 +26,8 @@ export default function Home() {
     try {
       setLoading(true)
       const data = await fetchSheetData()
-      setDevelopers(data)
+      setDevelopers(data.developers)
+      setMonth(data.month)
       setError(null)
     } catch (err) {
       console.error('Error loading data:', err)
@@ -51,7 +58,7 @@ export default function Home() {
             <p className="text-gray-400 text-lg">{error}</p>
           </div>
         ) : (
-          <HorseRace developers={developers} />
+          <HorseRace developers={developers} month={month} />
         )}
       </div>
     </main>

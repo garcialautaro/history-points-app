@@ -7,9 +7,10 @@ import { Developer } from '@/app/page'
 
 interface HorseRaceProps {
   developers: Developer[]
+  month: string
 }
 
-export default function HorseRace({ developers }: HorseRaceProps) {
+export default function HorseRace({ developers, month }: HorseRaceProps) {
   const [maxPoints, setMaxPoints] = useState(0)
 
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function HorseRace({ developers }: HorseRaceProps) {
           transition={{ delay: 0.2 }}
           className="text-base sm:text-lg md:text-xl text-gray-400 font-medium"
         >
-          Progreso mensual de los desarrolladores
+          Progreso del mes {month}
         </motion.p>
       </div>
 

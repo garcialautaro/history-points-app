@@ -1,4 +1,4 @@
-import { Developer } from '@/app/page'
+import { Developer, SheetData } from '@/app/page'
 
 const SHEET_ID = process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID
 const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY
@@ -10,19 +10,22 @@ const DEV_CONFIG: { [key: string]: string } = {
   'Benji': '/images/devs/benji.png',
 }
 
-export async function fetchSheetData(): Promise<Developer[]> {
+export async function fetchSheetData(): Promise<SheetData> {
   // Si no hay configuración, usar datos de ejemplo
   if (!SHEET_ID || !API_KEY) {
-    return [
-      { name: 'Gaston', points: 10, photo: DEV_CONFIG['Gaston'] },
-      { name: 'Marcos', points: 20, photo: DEV_CONFIG['Marcos'] },
-      { name: 'Benji', points: 30, photo: DEV_CONFIG['Benji'] },
-    ]
+    return {
+      developers: [
+        { name: 'Gaston', points: 10, photo: DEV_CONFIG['Gaston'] },
+        { name: 'Marcos', points: 20, photo: DEV_CONFIG['Marcos'] },
+        { name: 'Benji', points: 30, photo: DEV_CONFIG['Benji'] },
+      ],
+      month: 'Ejemplo'
+    }
   }
 
   try {
-    // Obtener datos de las celdas A2, B2, C2
-    const range = 'Sheet1!A2:C2'
+    // Obtener datos de las celdas A2, B2, C2, D2
+    const range = 'Sheet1!A2:D2'
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`
 
     const response = await fetch(url, {
@@ -39,7 +42,7 @@ export async function fetchSheetData(): Promise<Developer[]> {
     // Parsear los datos
     const developers: Developer[] = []
 
-    // A2 = Gaston, B2 = Marcos, C2 = Benji
+    // A2 = Gaston, B2 = Marcos, C2 = Benji, D2 = Mes
     const names = ['Gaston', 'Marcos', 'Benji']
 
     for (let i = 0; i < 3; i++) {
@@ -53,15 +56,23 @@ export async function fetchSheetData(): Promise<Developer[]> {
       })
     }
 
-    return developers
+    const month = values[3] || 'Sin mes'
+
+    return {
+      developers,
+      month
+    }
 
   } catch (error) {
     console.error('Error fetching sheet data:', error)
     // En caso de error, devolver datos de ejemplo
-    return [
-      { name: 'Gaston', points: 10, photo: DEV_CONFIG['Gaston'] },
-      { name: 'Marcos', points: 20, photo: DEV_CONFIG['Marcos'] },
-      { name: 'Benji', points: 30, photo: DEV_CONFIG['Benji'] },
-    ]
+    return {
+      developers: [
+        { name: 'Gaston', points: 10, photo: DEV_CONFIG['Gaston'] },
+        { name: 'Marcos', points: 20, photo: DEV_CONFIG['Marcos'] },
+        { name: 'Benji', points: 30, photo: DEV_CONFIG['Benji'] },
+      ],
+      month: 'Ejemplo'
+    }
   }
 }
